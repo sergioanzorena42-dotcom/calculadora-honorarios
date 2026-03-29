@@ -1,101 +1,379 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Ley 9.131 - Dr. Anzorena</title>
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3437/3437364.png">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3437/3437364.png">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Sans+3:wght@400;600&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Source Sans 3', sans-serif; background: #2c343a; color: #ffffff; padding: 15px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 500px; background: #373f47; padding: 25px; border-radius: 15px; border: 1px solid #c9a227; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1 { font-family: 'Playfair Display', serif; color: #c9a227; text-align: center; margin-bottom: 20px; font-size: 22px; }
-        .jus-card { background: rgba(201, 162, 39, 0.1); padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px; border: 1px dashed #c9a227; }
-        .jus-value { font-size: 28px; color: #ffd700; font-weight: 700; cursor: pointer; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: #c9a227; }
-        select, input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #4a555f; background: #1e252b; color: white; font-size: 16px; }
-        .hidden { display: none; }
-        .btn-calc { width: 100%; padding: 15px; background: #c9a227; color: #1e252b; border: none; border-radius: 8px; font-weight: 700; font-size: 18px; cursor: pointer; margin-bottom: 10px; }
-        #resultado { margin-top: 20px; padding: 15px; background: #1e252b; border-radius: 8px; border-left: 5px solid #c9a227; }
-        /* Estilo del Botón WhatsApp */
-        .btn-ws { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px; background: #25d366; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; margin-top: 15px; font-size: 15px; }
-        .btn-ws img { width: 20px; margin-right: 10px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Honorarios · Dr. Sergio Anzorena · Mendoza</title>
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3437/3437364.png">
+<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3437/3437364.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:    #f7f4ef;
+    --cream2:   #efe9df;
+    --navy:     #1a2740;
+    --navy2:    #243354;
+    --gold:     #9a7b2f;
+    --gold-lt:  #c9a84c;
+    --text:     #2c3a4a;
+    --muted:    #7a8898;
+    --border:   #d8cfc4;
+    --green:    #2e6b4a;
+    --green-lt: #e8f5ee;
+    --radius:   10px;
+    --shadow:   0 2px 16px rgba(26,39,64,0.08);
+    --whatsapp: #25d366;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 64px;
+    gap: 12px;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .header-emblem {
+    width: 38px; height: 38px;
+    border: 1.5px solid var(--gold-lt);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--gold-lt); flex-shrink: 0;
+  }
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600;
+    color: #fff; letter-spacing: 0.2px;
+  }
+  .header-sub {
+    font-size: 10px; color: rgba(255,255,255,0.45);
+    text-transform: uppercase; letter-spacing: 1.8px; margin-top: 1px;
+  }
+  .header-badge {
+    font-size: 10px; color: var(--gold-lt);
+    border: 1px solid rgba(201,168,76,0.35);
+    padding: 4px 10px; border-radius: 20px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 640px; margin: 0 auto; padding: 20px 14px 40px; }
+
+  /* ── JUS PANEL ── */
+  .jus-panel {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow);
+  }
+  .jus-label {
+    font-size: 9px; color: rgba(255,255,255,0.4);
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;
+  }
+  .jus-display {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--gold-lt);
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: opacity 0.15s;
+  }
+  #jus-input {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 700;
+    background: transparent;
+    border: 1px solid var(--gold-lt);
+    color: var(--gold-lt);
+    padding: 3px 10px; border-radius: 6px;
+    width: 185px; display: none;
+  }
+  .jus-note {
+    font-size: 10px; color: rgba(255,255,255,0.3);
+    margin-top: 4px; line-height: 1.4;
+  }
+  .jus-link {
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold-lt);
+    padding: 9px 14px; border-radius: 7px;
+    font-size: 11px; font-family: 'DM Sans', sans-serif;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; font-weight: 600;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--cream2);
+  }
+
+  /* ── FORM ── */
+  .field { margin-bottom: 14px; }
+  .field-label {
+    display: block;
+    font-size: 11px; font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+  select, input[type="text"] {
+    width: 100%;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 11px 13px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ── BOTONES ── */
+  .btn-calc {
+    width: 100%;
+    background: var(--navy);
+    border: none;
+    color: #fff;
+    padding: 14px;
+    border-radius: 7px;
+    font-size: 15px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+  }
+
+  /* BOTÓN WHATSAPP PRO */
+  .btn-ws-pro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: var(--whatsapp);
+    color: #fff;
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+    transition: transform 0.2s;
+  }
+  .btn-ws-pro:active { transform: scale(0.98); }
+  .btn-ws-pro img { width: 20px; filter: brightness(0) invert(1); }
+
+  /* ── RESULTADO ── */
+  .result-card {
+    background: var(--green-lt);
+    border: 1px solid rgba(46,107,74,0.25);
+    border-radius: var(--radius);
+    padding: 22px 20px;
+    box-shadow: var(--shadow);
+    animation: slideUp 0.35s ease;
+  }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .result-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 700;
+    color: var(--green);
+    line-height: 1;
+  }
+
+  .footer-sig {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .hidden { display: none !important; }
+  .info-box { background: #f0f5ff; border-left: 3px solid var(--navy2); padding: 10px 14px; font-size: 12.5px; }
+  .sep { height: 1px; background: var(--cream2); margin: 16px 0; }
+  .checks { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .check-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; cursor: pointer; }
+</style>
 </head>
 <body>
-<div class="container">
-    <h1>Calculadora de Honorarios</h1>
-    <div class="jus-card"><p>JUS Vigente (Tocar para editar)</p><div class="jus-value" id="jusDisplay">$ 35.500</div></div>
-    
-    <label>Tipo de Proceso:</label>
-    <select id="tipoProceso" onchange="mostrarCampos()">
-        <option value="">Seleccione una opción...</option>
-        <option value="monto">Juicio con Monto</option>
-        <option value="otros">Procesos sin Monto (Mínimos)</option>
-    </select>
 
-    <div id="cajaMonto" class="hidden">
-        <label>Monto del Juicio ($):</label>
-        <input type="number" id="montoJuicio" placeholder="Ej: 1500000">
+<header>
+  <div class="header-left">
+    <div class="header-emblem">⚖</div>
+    <div>
+      <div class="header-title">Herramienta Legal Pro</div>
+      <div class="header-sub">Dr. Sergio Anzorena · Mendoza</div>
+    </div>
+  </div>
+  <div class="header-badge">Ley 9.131</div>
+</header>
+
+<div class="page">
+  <div class="jus-panel">
+    <div class="jus-left">
+      <div class="jus-label">Valor del JUS</div>
+      <div class="jus-display" id="jus-display" onclick="editJus()">
+        <span id="jus-text">$ 665.078,59</span> <span style="font-size:14px; opacity:0.5">✎</span>
+      </div>
+      <input type="text" id="jus-input" value="665078.59" onblur="saveJus()" onkeydown="if(event.key==='Enter') saveJus()" />
+      <div class="jus-note">Actualizable manualmente tocando el valor</div>
+    </div>
+    <a class="jus-link" href="https://jusmendoza.gob.ar/tasas-judiciales/" target="_blank">JUS Oficial ↗</a>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Configuración del Caso</div>
+    <div class="field">
+      <label class="field-label">Categoría Jurídica</label>
+      <select id="categoria" onchange="onCategoriaChange()">
+        <option value="">Seleccioná...</option>
+        <option value="general">Juicios con monto (Art. 2)</option>
+        <option value="familia">Derecho de Familia (Art. 9 bis)</option>
+        <option value="desalojo">Desalojos (Art. 9.e)</option>
+        <option value="penal">Fuero Penal (Art. 10 bis)</option>
+        <option value="extra">Extrajudicial / Otros</option>
+      </select>
     </div>
 
-    <button class="btn-calc" onclick="calcular()">CALCULAR</button>
+    <div class="field hidden" id="caso-field">
+      <label class="field-label">Proceso específico</label>
+      <select id="caso" onchange="onCasoChange()"></select>
+    </div>
 
-    <div id="resultado" class="hidden"></div>
+    <div id="inputs-section" class="hidden">
+      <div class="sep"></div>
+      <div class="field hidden" id="monto-field">
+        <label class="field-label" id="monto-label">Base Económica ($)</label>
+        <input type="text" id="monto" placeholder="Ej: 5.000.000" oninput="formatInput(this)" />
+      </div>
+      <div class="field hidden" id="cuota-field">
+        <label class="field-label" id="cuota-label">Cuota mensual ($)</label>
+        <input type="text" id="cuota" placeholder="Ej: 150.000" oninput="formatInput(this)" />
+      </div>
+
+      <div class="checks">
+        <label class="check-item"><input type="checkbox" id="complejidad" /> +30% Complejidad (Art. 2)</label>
+        <label class="check-item"><input type="checkbox" id="perdedor" /> Parte perdedora (70%)</label>
+      </div>
+
+      <button class="btn-calc" onclick="calcular()">Calcular Honorarios Mínimos</button>
+    </div>
+  </div>
+
+  <div id="resultado-container" class="hidden">
+    <div id="resultado" class="result-card"></div>
     
-    <a id="btnConsulta" href="#" class="btn-ws hidden" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="W">
-        Consultar Validación Profesional
+    <a id="btn-whatsapp" href="#" class="btn-ws-pro" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="W">
+      Consultar Validación con el Dr. Anzorena
     </a>
+  </div>
+
+  <footer class="footer-sig">
+    Desarrollado por el Dr. Sergio Anzorena · Tecnología & Derecho
+  </footer>
 </div>
 
 <script>
-    let JUS = parseFloat(localStorage.getItem('valorJusPersonalizado')) || 35500;
-    
-    function fmt(n) { return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(n); }
-    
-    function actualizarJusUI() { document.getElementById('jusDisplay').innerText = fmt(JUS); }
+let JUS = 665078.59;
+const CASOS = {
+  general: [{ id:"gen_ord", label:"Ordinario Art. 2", tipo:"escala", factor:1 }, { id:"gen_suc", label:"Sucesión Art. 8", tipo:"escala", factor:0.70 }],
+  familia: [{ id:"fam_ali", label:"Alimentos (24 cuotas)", tipo:"alimentos" }, { id:"fam_div", label:"Divorcio (Mínimo)", tipo:"jus_fijo", jus:3 }],
+  desalojo: [{ id:"des_fal", label:"Desalojo Falta de Pago", tipo:"desalojo" }],
+  penal: [{ id:"pen_cri", label:"Proceso Criminal", tipo:"jus_fijo", jus:5 }],
+  extra: [{ id:"ext_car", label:"Carta Documento", tipo:"jus_fijo", jus:0.5 }]
+};
 
-    document.getElementById('jusDisplay').onclick = () => {
-        const nuevo = prompt("Ingrese el valor del JUS actual:", JUS);
-        if (nuevo && !isNaN(nuevo)) { JUS = parseFloat(nuevo); localStorage.setItem('valorJusPersonalizado', JUS); actualizarJusUI(); }
-    };
+function fmtPesos(n) { return new Intl.NumberFormat("es-AR", { style:"currency", currency:"ARS", maximumFractionDigits:0 }).format(n); }
+function formatInput(el) { let v = el.value.replace(/[^\d]/g,""); if (v) el.value = new Intl.NumberFormat("es-AR").format(parseInt(v)); }
+function parseMonto(str) { return parseFloat((str || "").replace(/\./g,"").replace(",",".")) || 0; }
 
-    function mostrarCampos() {
-        const tipo = document.getElementById('tipoProceso').value;
-        document.getElementById('cajaMonto').classList.toggle('hidden', tipo !== 'monto');
-    }
+function onCategoriaChange() {
+  const cat = document.getElementById("categoria").value;
+  const casoSel = document.getElementById("caso");
+  document.getElementById("caso-field").classList.toggle("hidden", !cat);
+  if (!cat) return;
+  casoSel.innerHTML = '<option value="">Seleccioná...</option>';
+  (CASOS[cat] || []).forEach(c => {
+    const o = document.createElement("option"); o.value = c.id; o.textContent = c.label; casoSel.appendChild(o);
+  });
+}
 
-    function calcular() {
-        const tipo = document.getElementById('tipoProceso').value;
-        const resDiv = document.getElementById('resultado');
-        const btnWS = document.getElementById('btnConsulta');
-        const monto = parseFloat(document.getElementById('montoJuicio').value) || 0;
-        
-        resDiv.classList.remove('hidden');
-        btnWS.classList.remove('hidden');
+function onCasoChange() {
+  const id = document.getElementById("caso").value;
+  document.getElementById("inputs-section").classList.toggle("hidden", !id);
+  const cat = document.getElementById("categoria").value;
+  const caso = (CASOS[cat] || []).find(c => c.id === id);
+  document.getElementById("monto-field").classList.toggle("hidden", !(caso.tipo === "escala" || caso.tipo === "desalojo"));
+  document.getElementById("cuota-field").classList.toggle("hidden", !(caso.tipo === "alimentos" || caso.tipo === "desalojo"));
+}
 
-        let honPesos = 0;
-        let detalle = "";
+function calcular() {
+  const cat = document.getElementById("categoria").value;
+  const id = document.getElementById("caso").value;
+  const caso = (CASOS[cat] || []).find(c => c.id === id);
+  const m = parseMonto(document.getElementById("monto").value);
+  const c = parseMonto(document.getElementById("cuota").value);
+  
+  let totalJus = 0;
+  if (caso.tipo === "jus_fijo") totalJus = caso.jus;
+  else if (caso.tipo === "escala") totalJus = (m / JUS) * 0.12 * caso.factor;
+  else if (caso.tipo === "alimentos") totalJus = ((c * 24) / JUS) * 0.12;
+  else if (caso.tipo === "desalojo") totalJus = (Math.max(m, c*24) / JUS) * 0.12;
 
-        if (tipo === 'monto') {
-            honPesos = monto * 0.12; // Estimación base Art. 2
-            detalle = `Monto Juicio: ${fmt(monto)}`;
-        } else {
-            honPesos = JUS * 2; // Mínimo ejemplo
-            detalle = "Proceso s/monto";
-        }
+  if (document.getElementById("complejidad").checked) totalJus *= 1.3;
+  if (document.getElementById("perdedor").checked) totalJus *= 0.7;
 
-        const jusResult = (honPesos / JUS).toFixed(2);
-        resDiv.innerHTML = `<h3 style="color:#ffd700">Honorarios: ${fmt(honPesos)}</h3><p>${jusResult} JUS</p><small style="opacity:0.7">Base: Ley 9.131 Mendoza</small>`;
+  const totalPesos = totalJus * JUS;
+  document.getElementById("resultado").innerHTML = `
+    <div style="font-size:9px; color:var(--green); letter-spacing:2px; text-transform:uppercase">Honorario Estimado</div>
+    <div class="result-amount">${fmtPesos(totalPesos)}</div>
+    <div style="color:var(--green); opacity:0.7; font-size:14px">${totalJus.toFixed(2)} JUS</div>
+  `;
+  document.getElementById("resultado-container").classList.remove("hidden");
 
-        // Configurar mensaje de WhatsApp
-        const msg = encodeURIComponent(`Hola Dr. Anzorena, realicé un cálculo en su app: ${detalle}. Los honorarios son ${fmt(honPesos)} (${jusResult} JUS). Me gustaría una consulta profesional.`);
-        btnWS.href = `https://wa.me/5492615703374?text=${msg}`;
-    }
-    actualizarJusUI();
+  // Configurar WhatsApp
+  const msg = encodeURIComponent(`Hola Dr. Sergio Anzorena, realicé un cálculo para un proceso de ${caso.label}. El monto estimado es de ${fmtPesos(totalPesos)} (${totalJus.toFixed(2)} JUS). Me interesa una validación profesional.`);
+  document.getElementById("btn-whatsapp").href = `https://wa.me/5492615703374?text=${msg}`;
+}
+
+function editJus() { document.getElementById("jus-display").style.display = "none"; document.getElementById("jus-input").style.display = "block"; document.getElementById("jus-input").focus(); }
+function saveJus() { const v = parseFloat(document.getElementById("jus-input").value); if (v > 1000) JUS = v; document.getElementById("jus-text").textContent = fmtPesos(JUS); document.getElementById("jus-input").style.display = "none"; document.getElementById("jus-display").style.display = "flex"; }
 </script>
 </body>
 </html>
