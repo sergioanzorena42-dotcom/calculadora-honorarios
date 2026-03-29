@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Ley 9.131 - Dr. Anzorena</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3437/3437364.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3437/3437364.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Sans+3:wght@400;600&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Source Sans 3', sans-serif; background: #2c343a; color: #ffffff; padding: 15px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 500px; background: #373f47; padding: 25px; border-radius: 15px; border: 1px solid #c9a227; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h1 { font-family: 'Playfair Display', serif; color: #c9a227; text-align: center; margin-bottom: 20px; font-size: 22px; }
+        .jus-card { background: rgba(201, 162, 39, 0.1); padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px; border: 1px dashed #c9a227; }
+        .jus-value { font-size: 28px; color: #ffd700; font-weight: 700; cursor: pointer; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #c9a227; }
+        select, input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #4a555f; background: #1e252b; color: white; font-size: 16px; }
+        .hidden { display: none; }
+        .btn-calc { width: 100%; padding: 15px; background: #c9a227; color: #1e252b; border: none; border-radius: 8px; font-weight: 700; font-size: 18px; cursor: pointer; margin-bottom: 10px; }
+        #resultado { margin-top: 20px; padding: 15px; background: #1e252b; border-radius: 8px; border-left: 5px solid #c9a227; }
+        /* Estilo del Botón WhatsApp */
+        .btn-ws { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px; background: #25d366; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; margin-top: 15px; font-size: 15px; }
+        .btn-ws img { width: 20px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Calculadora de Honorarios</h1>
+    <div class="jus-card"><p>JUS Vigente (Tocar para editar)</p><div class="jus-value" id="jusDisplay">$ 35.500</div></div>
+    
+    <label>Tipo de Proceso:</label>
+    <select id="tipoProceso" onchange="mostrarCampos()">
+        <option value="">Seleccione una opción...</option>
+        <option value="monto">Juicio con Monto</option>
+        <option value="otros">Procesos sin Monto (Mínimos)</option>
+    </select>
+
+    <div id="cajaMonto" class="hidden">
+        <label>Monto del Juicio ($):</label>
+        <input type="number" id="montoJuicio" placeholder="Ej: 1500000">
+    </div>
+
+    <button class="btn-calc" onclick="calcular()">CALCULAR</button>
+
+    <div id="resultado" class="hidden"></div>
+    
+    <a id="btnConsulta" href="#" class="btn-ws hidden" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="W">
+        Consultar Validación Profesional
+    </a>
+</div>
+
+<script>
+    let JUS = parseFloat(localStorage.getItem('valorJusPersonalizado')) || 35500;
+    
+    function fmt(n) { return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(n); }
+    
+    function actualizarJusUI() { document.getElementById('jusDisplay').innerText = fmt(JUS); }
+
+    document.getElementById('jusDisplay').onclick = () => {
+        const nuevo = prompt("Ingrese el valor del JUS actual:", JUS);
+        if (nuevo && !isNaN(nuevo)) { JUS = parseFloat(nuevo); localStorage.setItem('valorJusPersonalizado', JUS); actualizarJusUI(); }
+    };
+
+    function mostrarCampos() {
+        const tipo = document.getElementById('tipoProceso').value;
+        document.getElementById('cajaMonto').classList.toggle('hidden', tipo !== 'monto');
+    }
+
+    function calcular() {
+        const tipo = document.getElementById('tipoProceso').value;
+        const resDiv = document.getElementById('resultado');
+        const btnWS = document.getElementById('btnConsulta');
+        const monto = parseFloat(document.getElementById('montoJuicio').value) || 0;
+        
+        resDiv.classList.remove('hidden');
+        btnWS.classList.remove('hidden');
+
+        let honPesos = 0;
+        let detalle = "";
+
+        if (tipo === 'monto') {
+            honPesos = monto * 0.12; // Estimación base Art. 2
+            detalle = `Monto Juicio: ${fmt(monto)}`;
+        } else {
+            honPesos = JUS * 2; // Mínimo ejemplo
+            detalle = "Proceso s/monto";
+        }
+
+        const jusResult = (honPesos / JUS).toFixed(2);
+        resDiv.innerHTML = `<h3 style="color:#ffd700">Honorarios: ${fmt(honPesos)}</h3><p>${jusResult} JUS</p><small style="opacity:0.7">Base: Ley 9.131 Mendoza</small>`;
+
+        // Configurar mensaje de WhatsApp
+        const msg = encodeURIComponent(`Hola Dr. Anzorena, realicé un cálculo en su app: ${detalle}. Los honorarios son ${fmt(honPesos)} (${jusResult} JUS). Me gustaría una consulta profesional.`);
+        btnWS.href = `https://wa.me/5492615703374?text=${msg}`;
+    }
+    actualizarJusUI();
+</script>
+</body>
+</html>
