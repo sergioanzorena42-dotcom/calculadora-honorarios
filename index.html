@@ -600,23 +600,22 @@ function calcular() {
     <div class="result-footer">Ley 9.131 Mendoza · JUS vigente: ${fmtPesos(JUS)}</div>
   `;
   div.classList.remove("hidden");
-}// --- FUNCIÓN PARA EL LÁPIZ Y MEMORIA ---
+// --- FUNCIÓN PARA EL LÁPIZ Y MEMORIA ---
 const jusValue = document.querySelector('.jus-value');
 if (jusValue) {
     jusValue.onclick = () => {
         const nuevo = prompt("Ingrese el nuevo valor del JUS:", JUS);
         if (nuevo && !isNaN(nuevo)) {
             const valorNumerico = parseFloat(nuevo);
-            // Guarda en la memoria del celular
             localStorage.setItem('valorJusPersonalizado', valorNumerico);
             JUS = valorNumerico;
-            // Actualiza los textos en pantalla
             document.querySelectorAll('.jus-vigente-display').forEach(el => {
                 el.innerText = fmtPesos(JUS);
             });
             alert("JUS actualizado y guardado.");
-            // Si hay un cálculo hecho, lo refresca
-            if (casoActual) calcularHonorarios();
+            if (typeof calcularHonorarios === 'function' && casoActual) {
+                calcularHonorarios();
+            }
         }
     };
 }
